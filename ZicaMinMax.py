@@ -25,8 +25,15 @@ class ZicaMinMax (NodeMinMax):
 		self.enemyColor = 'o' if color == '@' else '@'
 	
 	def generateChildren(self):
-		#TODO
-		return 0
+		moveColor = self.color if self.type == minmax.MAX else self.enemyColor
+		
+		moves = self.board.valid_moves(moveColor)
+
+		for move in moves:
+			nextBoard = self.board.get_clone()
+			nextBoard.play(move, moveColor)
+			child = ZicaMinMax(self.getChildrenType(), move, self.depth + 1, self.maxDepth, nextBoard, self.color)
+			self.children.append(child)
 	
 	def calculateValue(self):
 		self.value = 0
