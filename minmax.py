@@ -18,6 +18,11 @@ class NodeMinMax:
 	def evaluate(self, alpha, beta):
 		if not self.leaf :
 			self.generateChildren()
+			if len(self.children) == 0:
+				#No moves left
+				self.calculateValue()
+				return self.value
+
 			if self.type == MAX :
 				self.value = -INFINITY
 				for node in self.children :
