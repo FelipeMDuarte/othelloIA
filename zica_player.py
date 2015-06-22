@@ -4,7 +4,7 @@ from models.players.ZicaMinMax import ZicaMinMax
 class ZicaPlayer:
 	def __init__(self, color):
 		self.color = color
-		self.minMaxTreeDepth = 3
+		self.minMaxTreeDepth = 5
 
 	def play(self, board):
 		minMax = ZicaMinMax(1, None, 1, self.minMaxTreeDepth, board, self.color)
