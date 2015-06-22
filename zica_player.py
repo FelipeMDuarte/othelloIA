@@ -1,3 +1,4 @@
+INFINITY = 9999
 from models.players.ZicaMinMax import ZicaMinMax
 
 class ZicaPlayer:
@@ -7,7 +8,7 @@ class ZicaPlayer:
 
 	def play(self, board):
 		minMax = ZicaMinMax(1, None, 1, self.minMaxTreeDepth, board, self.color)
-		minMax.evaluate()
+		minMax.evaluate(-INFINITY,INFINITY)
 		
 		for child in minMax.children:
 			if child.value == minMax.value:

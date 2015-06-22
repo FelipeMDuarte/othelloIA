@@ -1,5 +1,6 @@
 MAX = 1
 MIN = -1
+INFINITY = 9999
 
 class NodeMinMax:
 	def __init__(self, type, key, depth, maxDepth):
@@ -14,15 +15,28 @@ class NodeMinMax:
 	def getChildrenType(self):
 		return -self.type
 
-	def evaluate(self):
+	def evaluate(self, alpha, beta):
 		if not self.leaf :
 			self.generateChildren()
-			for node in self.children:
-				node.evaluate()
-				if self.value == None or (self.type == MAX and node.value > self.value) or  (self.type == MIN and node.value < self.value):
-					self.value = node.value 
+			if self.type == MAX :
+				self.value = -INFINITY
+				for node in self.children :
+					self.value = max(self.value,node.evaluate(alpha,beta))
+					if self.value >= beta :
+						return self.value
+					alpha = max(alpha,self.value)
+				return self.value
+			else:
+				self.value = INFINITY
+				for node in self.children :
+					self.value = min(self.value,node.evaluate(alpha,beta))
+					if self.value <= alpha :
+						return self.value
+					beta = min(beta,self.value)
+				return self.value
 		else :
-			self.calculateValue()	
+			self.calculateValue()
+			return self.value	
 	
 	
 	def generateChildren(self):
